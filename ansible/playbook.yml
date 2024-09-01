@@ -1,0 +1,29 @@
+# ansible/playbook.yml
+---
+- name: Configure Ubuntu VM
+  hosts: all
+  become: true
+  tasks:
+    - name: Update and upgrade apt packages
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Install basic packages
+      apt:
+        name:
+          - git
+          - curl
+          - vim
+        state: present
+
+    - name: Ensure Apache is installed
+      apt:
+        name: apache2
+        state: present
+
+    - name: Start and enable Apache service
+      service:
+        name: apache2
+        state: started
+        enabled: true
